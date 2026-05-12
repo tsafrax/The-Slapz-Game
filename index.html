@@ -5,15 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Φάπα – Ξάπλα</title>
     <style>
-        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #000; }
-        iframe { width: 100%; height: 100%; border: none; }
+        /* 1. Setup the viewport to hide overflow */
+        body, html { 
+            margin: 0; 
+            padding: 0; 
+            height: 100%; 
+            width: 100%; 
+            overflow: hidden; 
+            background-color: #fdf5e6; /* Matches your game background color */
+            touch-action: manipulation; /* Prevents double-tap zoom delay */
+        }
+
+        /* 2. Create the 'Cutter' container */
+        .game-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden; /* This crops the extra 70px of the iframe */
+        }
+
+        /* 3. The Iframe: Taller than the screen to hide the bottom badge */
+        iframe { 
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%; 
+            /* 100% of height + 70px extra for the badge area */
+            height: calc(100% + 70px); 
+            border: none; 
+            display: block;
+        }
     </style>
 </head>
 <body>
-    <iframe 
-        src="https://theslapgame.base44.app" 
-        allow="autoplay; fullscreen; clipboard-write;"
-        allowfullscreen>
-    </iframe>
+
+    <div class="game-wrapper">
+        <iframe 
+            src="https://theslapgame.base44.app" 
+            allow="autoplay; fullscreen; clipboard-write; gyroscope; accelerometer" 
+            allowfullscreen>
+        </iframe>
+    </div>
+
 </body>
 </html>
