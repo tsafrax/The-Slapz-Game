@@ -1,0 +1,28 @@
+body { background-color: #fdf5e6; font-family: 'Bangers', cursive; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+.game-container { text-align: center; width: 100%; max-width: 400px; }
+.title { color: #333; font-size: 50px; margin-bottom: 20px; }
+
+.avatar-stage { position: relative; margin-bottom: 30px; }
+.avatar-circle {
+    width: 200px; height: 200px; border-radius: 50%; border: 8px solid #fff;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin: 0 auto; overflow: hidden;
+    cursor: pointer; transition: transform 0.1s; background: white;
+}
+#target-img { width: 100%; height: 100%; object-fit: cover; }
+
+#pop-text {
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    color: #ff4757; font-size: 60px; display: none; z-index: 10;
+}
+
+.stats-row { display: flex; justify-content: space-around; margin-bottom: 20px; font-size: 24px; }
+.btn-hit { background: #ff4757; color: white; border: none; padding: 15px 40px; border-radius: 30px; font-size: 20px; width: 80%; }
+.btn-reset { background: #70a1ff; color: white; border: none; padding: 10px 20px; border-radius: 10px; margin-top: 10px; }
+
+/* The Slap Effect */
+.hit-shake { animation: shake 0.15s; filter: brightness(1.2); }
+@keyframes shake {
+    0% { transform: scale(1); }
+    50% { transform: scale(0.9) rotate(5deg); }
+    100% { transform: scale(1); }
+}
