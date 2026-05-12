@@ -1,0 +1,9 @@
+{
+  "name": "Φάπα – Ξάπλα",
+  "short_name": "SlapGame",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#fdf5e6",
+  "theme_color": "#fdf5e6",
+  "icons": [{ "src": "img/man.png", "sizes": "512x512", "type": "image/png" }]
+}
