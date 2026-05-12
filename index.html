@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="el">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slap Game Zero</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-    <link href='https://fonts.googleapis.com/css?family=Bangers' rel='stylesheet'>
+    <title>Φάπα – Ξάπλα</title>
+    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
     <link rel="stylesheet" href="game.css">
 </head>
 <body>
@@ -13,24 +12,19 @@
         <h1 class="title">Φάπα – Ξάπλα</h1>
         
         <div class="avatar-stage">
-            <h1 id="pop-text">POW!</h1>
-            <div class="avatar-circle" onclick="triggerHit('slap')">
+            <h2 id="pop-text">POW!</h2>
+            <div class="avatar-circle" onclick="triggerHit()">
                 <img id="target-img" src="img/man.png" alt="Target">
             </div>
         </div>
 
-        <div class="stats-row">
-            <div class="stat-box">HEALTH: <span id="health">100</span>%</div>
-            <div class="stat-box">HITS: <span id="hits">0</span></div>
+        <div class="stats">
+            <div>HITS: <span id="hits">0</span></div>
         </div>
 
-        <div class="controls">
-            <button class="btn-hit" onclick="triggerHit('punch')">PUNCH</button>
-            <button class="btn-reset" onclick="resetGame()">RESET</button>
-        </div>
+        <button class="btn-reset" onclick="resetGame()">RESET</button>
     </div>
 
     <script type="module" src="game.js"></script>
 </body>
 </html>
- 
