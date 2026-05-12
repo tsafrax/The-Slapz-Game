@@ -2,29 +2,18 @@
 <html lang="el">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Φάπα – Ξάπλα</title>
-    <link href="https://fonts.googleapis.com/css?family=Bangers" rel="stylesheet">
-    <link rel="stylesheet" href="game.css">
+    <style>
+        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background-color: #000; }
+        iframe { width: 100%; height: 100%; border: none; }
+    </style>
 </head>
 <body>
-    <div class="game-container">
-        <h1 class="title">Φάπα – Ξάπλα</h1>
-        
-        <div class="avatar-stage">
-            <h2 id="pop-text">POW!</h2>
-            <div class="avatar-circle" onclick="triggerHit()">
-                <img id="target-img" src="img/man.png" alt="Target">
-            </div>
-        </div>
-
-        <div class="stats">
-            <div>HITS: <span id="hits">0</span></div>
-        </div>
-
-        <button class="btn-reset" onclick="resetGame()">RESET</button>
-    </div>
-
-    <script type="module" src="game.js"></script>
+    <iframe 
+        src="https://app.base44.com/apps/6a02d2983989447500838a5e/editor/preview" 
+        allow="autoplay; fullscreen; clipboard-write;"
+        allowfullscreen>
+    </iframe>
 </body>
 </html>
