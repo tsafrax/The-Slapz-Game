@@ -2,6 +2,15 @@ import { createClient } from 'https://esm.sh/@base44/sdk';
 
 const base44 = createClient({
   appId: "6a02d2983989447500838a5e",
+  headers: {
+    "api_key": "9cfe17cba67b408e943bd4056e593b9d"
+  }
+});
+
+import { createClient } from 'https://esm.sh/@base44/sdk';
+
+const base44 = createClient({
+  appId: "6a02d2983989447500838a5e",
   headers: { "api_key": "9cfe17cba67b408e943bd4056e593b9d" }
 });
 
