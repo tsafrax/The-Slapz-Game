@@ -1,42 +1,174 @@
 <!DOCTYPE html>
 <html lang="el">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    
+
     <title>Φάπα – Ξάπλα</title>
 
-    <link rel="manifest" href="manifest.json">
+    <!-- Social Media Open Graph Tags -->
+    <meta property="og:title" content="Φάπα – Ξάπλα">
+    <meta property="og:description" content="Παίξε τώρα! Δείξε τα αντανακλαστικά σου και ρίξε την πιο δυνατή φάπα.">
+    <meta property="og:image" content="https://raw.githubusercontent.com/Codexx-ui/The-Slapz-Game/main/social-preview.png">
+    <meta property="og:url" content="https://Codexx-ui.github.io/The-Slapz-Game/">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
 
     <style>
-        body, html { 
-            margin: 0; padding: 0; width: 100%; height: 100%; 
-            overflow: hidden; background-color: #fdf5e6; 
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #0d0d12;
             touch-action: manipulation;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
+
+        /* --- SPLASH SCREEN --- */
+        #splash-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a0b2e 0%, #0d0d12 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+        }
+
+        #splash-screen.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader {
+            text-align: center;
+            position: relative;
+        }
+
+        .loader h1 {
+            color: #fff;
+            font-size: 3rem;
+            margin: 0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(255, 42, 85, 0.8);
+            animation: pulseText 1.5s infinite alternate;
+        }
+
+        .loader p {
+            color: #ff2a55;
+            font-size: 1.2rem;
+            margin-top: 10px;
+            font-weight: bold;
+            letter-spacing: 3px;
+            animation: pulseText 1.5s infinite alternate;
+            animation-delay: 0.5s;
+        }
+
+        .glow {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, rgba(255, 42, 85, 0.4) 0%, rgba(0, 0, 0, 0) 70%);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseText {
+            0% {
+                transform: scale(1);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.05);
+                opacity: 1;
+                text-shadow: 0 0 30px rgba(255, 42, 85, 1);
+            }
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.5;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.5);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0.5;
+            }
+        }
+
         /* Το "κόλπο" για να κρύψουμε το Base44 badge στο κάτω μέρος */
         .wrapper {
             position: relative;
             width: 100%;
             height: 100%;
             overflow: hidden;
+            opacity: 0;
+            transition: opacity 0.8s ease-in;
         }
-        iframe { 
+
+        .wrapper.visible {
+            opacity: 1;
+        }
+
+        iframe {
             position: absolute;
             top: 0;
             left: 0;
-            width: 100%; 
-            height: calc(100% + 70px); /* Το κάνουμε λίγο πιο μακρύ για να βγει το badge εκτός οθόνης */
-            border: none; 
+            width: 100%;
+            height: calc(100% + 70px);
+            /* Το κάνουμε λίγο πιο μακρύ για να βγει το badge εκτός οθόνης */
+            border: none;
         }
     </style>
 </head>
+
 <body>
-    <div class="wrapper">
-        <iframe src="https://theslapgame.base44.app"></iframe>
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <div class="loader">
+            <div class="glow"></div>
+            <h1>ΦΑΠΑ ΞΑΠΛΑ</h1>
+            <p>ΦΟΡΤΩΣΗ...</p>
+        </div>
     </div>
+
+    <!-- Game Wrapper -->
+    <div class="wrapper" id="game-wrapper">
+        <iframe id="game-frame" src="https://theslapgame.base44.app"></iframe>
+    </div>
+
+    <script>
+        // Όταν φορτώσει το iframe, κρύβουμε το splash screen και εμφανίζουμε το παιχνίδι
+        document.getElementById('game-frame').onload = function () {
+            setTimeout(function () {
+                document.getElementById('splash-screen').classList.add('hidden');
+                document.getElementById('game-wrapper').classList.add('visible');
+            }, 1000); // Δίνουμε 1 δευτερόλεπτο ελάχιστο χρόνο για να φανεί το εφέ του loader
+        };
+    </script>
 </body>
+
 </html>
