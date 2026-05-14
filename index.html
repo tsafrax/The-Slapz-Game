@@ -13,8 +13,10 @@
 
     <!-- Social Media Open Graph Tags -->
     <meta property="og:title" content="Φάπα – Ξάπλα">
-    <meta property="og:description" content="Παίξε τώρα! Δείξε τα αντανακλαστικά σου και ρίξε την πιο δυνατή φάπα.">
-    <meta property="og:image" content="https://raw.githubusercontent.com/Codexx-ui/The-Slapz-Game/main/social-preview.png">
+    <meta property="og:description"
+        content="Παίξε τώρα! Δείξε τα αντανακλαστικά σου και ρίξε την πιο δυνατή φάπα στην Διαφθορά.">
+    <meta property="og:image"
+        content="https://raw.githubusercontent.com/Codexx-ui/The-Slapz-Game/main/social-preview.png">
     <meta property="og:url" content="https://Codexx-ui.github.io/The-Slapz-Game/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
@@ -119,6 +121,62 @@
             }
         }
 
+        /* --- START BUTTON --- */
+        #start-btn {
+            background: linear-gradient(45deg, #ff2a55, #ff007f);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(255, 42, 85, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: none; /* Εμφανίζεται μόλις φορτώσει */
+            animation: pulseText 1.5s infinite alternate;
+        }
+        #start-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 42, 85, 0.6);
+        }
+
+        /* --- AUDIO TOGGLE --- */
+        .audio-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            z-index: 1000;
+            transition: background 0.3s, transform 0.3s, opacity 0.5s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            opacity: 0;
+            pointer-events: none;
+            user-select: none;
+        }
+        .audio-control.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .audio-control:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.1);
+        }
+
         /* Το "κόλπο" για να κρύψουμε το Base44 badge στο κάτω μέρος */
         .wrapper {
             position: relative;
@@ -151,7 +209,8 @@
         <div class="loader">
             <div class="glow"></div>
             <h1>ΦΑΠΑ ΞΑΠΛΑ</h1>
-            <p>ΦΟΡΤΩΣΗ...</p>
+            <p id="loading-text">ΦΟΡΤΩΣΗ...</p>
+            <button id="start-btn">ΕΝΑΡΞΗ ΠΑΙΧΝΙΔΙΟΥ</button>
         </div>
     </div>
 
@@ -160,14 +219,58 @@
         <iframe id="game-frame" src="https://theslapgame.base44.app"></iframe>
     </div>
 
+    <!-- Floating Audio Toggle -->
+    <div class="audio-control" id="audio-toggle">
+        🔊
+    </div>
+
+    <!-- Background Audio Element -->
+    <audio id="bg-music" loop>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
+
     <script>
-        // Όταν φορτώσει το iframe, κρύβουμε το splash screen και εμφανίζουμε το παιχνίδι
-        document.getElementById('game-frame').onload = function () {
-            setTimeout(function () {
-                document.getElementById('splash-screen').classList.add('hidden');
-                document.getElementById('game-wrapper').classList.add('visible');
-            }, 1000); // Δίνουμε 1 δευτερόλεπτο ελάχιστο χρόνο για να φανεί το εφέ του loader
+        const gameFrame = document.getElementById('game-frame');
+        const loadingText = document.getElementById('loading-text');
+        const startBtn = document.getElementById('start-btn');
+        const splashScreen = document.getElementById('splash-screen');
+        const gameWrapper = document.getElementById('game-wrapper');
+        const audioToggle = document.getElementById('audio-toggle');
+        const bgMusic = document.getElementById('bg-music');
+        
+        let isMuted = false;
+
+        // Όταν φορτώσει το iframe, κρύβουμε το "Φόρτωση" και εμφανίζουμε το κουμπί Έναρξης
+        gameFrame.onload = function() {
+            setTimeout(() => {
+                loadingText.style.display = 'none';
+                startBtn.style.display = 'inline-block';
+            }, 800);
         };
+
+        // Όταν πατήσει το κουμπί Έναρξης
+        startBtn.addEventListener('click', function() {
+            splashScreen.classList.add('hidden');
+            gameWrapper.classList.add('visible');
+            audioToggle.classList.add('visible');
+            
+            // Ξεκινάμε τη μουσική
+            bgMusic.volume = 0.5; // Ένταση στο 50%
+            bgMusic.play().catch(e => console.log('Autoplay blocked', e));
+        });
+
+        // Κουμπί εναλλαγής ήχου (Mute / Unmute)
+        audioToggle.addEventListener('click', function() {
+            if (isMuted) {
+                bgMusic.play();
+                audioToggle.innerHTML = '🔊';
+                isMuted = false;
+            } else {
+                bgMusic.pause();
+                audioToggle.innerHTML = '🔇';
+                isMuted = true;
+            }
+        });
     </script>
 </body>
 
